@@ -5,13 +5,15 @@ public class Notification {
     private String id;
     private String title;
     private String message;
+    private NotificationPriority priority;
 
     public Notification() {}
 
-    public Notification(String id, String title, String message) {
+    public Notification(String id, String title, String message, NotificationPriority priority) {
         this.id = id;
         this.title = title;
         this.message = message;
+        this.priority = priority;
     }
 
     public String getId() {
@@ -38,12 +40,21 @@ public class Notification {
         this.message = message;
     }
 
+    public NotificationPriority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(NotificationPriority priority) {
+        this.priority = priority;
+    }
+
     @Override
     public String toString() {
         return "Notification{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", message='" + message + '\'' +
+                ", priority=" + priority +
                 '}';
     }
 }
