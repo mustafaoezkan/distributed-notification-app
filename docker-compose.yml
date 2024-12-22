@@ -1,5 +1,18 @@
 version: '3.8'
 services:
+  log-db:
+    image: mysql:8.0
+    container_name: log-db-container
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    networks:
+      - app-network
+
   rabbitmq:
     image: rabbitmq:management
     container_name: rabbitmq-container
@@ -15,8 +28,12 @@ services:
       - "8080:8080"
     depends_on:
       - rabbitmq
+      - log-db
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://log-db-container:3306/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      SPRING_PROFILES_ACTIVE: docker
     networks:
       - app-network
 

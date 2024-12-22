@@ -7,13 +7,16 @@ public class Notification {
     private String message;
     private NotificationPriority priority;
 
+    private String recipient;
+
     public Notification() {}
 
-    public Notification(String id, String title, String message, NotificationPriority priority) {
+    public Notification(String id, String title, String message, NotificationPriority priority, String recipient) {
         this.id = id;
         this.title = title;
         this.message = message;
         this.priority = priority;
+        this.recipient = recipient;
     }
 
     public String getId() {
@@ -48,6 +51,14 @@ public class Notification {
         this.priority = priority;
     }
 
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
+    }
+
     @Override
     public String toString() {
         return "Notification{" +
@@ -55,6 +66,7 @@ public class Notification {
                 ", title='" + title + '\'' +
                 ", message='" + message + '\'' +
                 ", priority=" + priority +
+                ", recipient='" + recipient + '\'' +
                 '}';
     }
 }

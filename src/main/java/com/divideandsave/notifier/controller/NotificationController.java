@@ -1,10 +1,10 @@
 package com.divideandsave.notifier.controller;
 
-import com.divideandsave.notifier.model.NotificationPriority;
+import com.divideandsave.notifier.dto.request.NotificationRequest;
 import com.divideandsave.notifier.service.NotificationProducer;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,8 +18,8 @@ public class NotificationController {
     }
 
     @PostMapping
-    public String sendNotification(@RequestParam String title, @RequestParam String message, @RequestParam NotificationPriority priority) {
-        notificationProducer.sendNotification(title, message, priority);
+    public String sendNotification(@RequestBody NotificationRequest request) {
+        notificationProducer.sendNotification(request);
         return "Notification sent!";
     }
 }

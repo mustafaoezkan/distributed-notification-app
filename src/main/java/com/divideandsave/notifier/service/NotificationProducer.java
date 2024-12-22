@@ -1,7 +1,7 @@
 package com.divideandsave.notifier.service;
 
+import com.divideandsave.notifier.dto.request.NotificationRequest;
 import com.divideandsave.notifier.model.Notification;
-import com.divideandsave.notifier.model.NotificationPriority;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,8 +23,8 @@ public class NotificationProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendNotification(String title, String message, NotificationPriority priority) {
-        Notification notification = new Notification(UUID.randomUUID().toString(), title, message, priority);
+    public void sendNotification(NotificationRequest request) {
+        Notification notification = new Notification(UUID.randomUUID().toString(), request.getTitle(), request.getMessage(), request.getPriority(), request.getRecipient());
         rabbitTemplate.convertAndSend(exchange, routingKey, notification);
         System.out.println("Notification sent: " + notification);
     }
